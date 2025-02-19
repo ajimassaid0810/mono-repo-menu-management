@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Menu {
+  id        String   @id @default(uuid())
+  name      String  
+  parentId  String?  // Hapus @default(null)
+  depth     Int     
+  order     Int     
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent    Menu?    @relation("MenuToMenu", fields: [parentId], references: [id])
+  children  Menu[]   @relation("MenuToMenu")
+}

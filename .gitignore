@@ -1,0 +1,8 @@
+# Ignore node_modules and build files in both projects
+be-nest/node_modules/
+be-nest/.env
+be-nest/dist/
+
+fe-next/node_modules/
+fe-next/.env
+fe-next/.next/
