@@ -1,5 +1,5 @@
 // src/app/layout.tsx
-import { Providers } from '../../../fe-next/src/redux/provider';
+import { Providers } from '../redux/provider';
 import type { Metadata } from 'next';
 import './globals.css';
 
