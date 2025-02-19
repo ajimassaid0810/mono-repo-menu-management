@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMenuHierarchy, getMenusById, fetchMenus, updateMenuById, createMenu } from "../../redux/slices/menuSlice";
+import { fetchMenuHierarchy,  fetchMenus, updateMenuById, createMenu } from "../../redux/slices/menuSlice";
 import TreeView from "../components/menuTree";
 import { AppDispatch, RootState } from "../../redux/store";
 
