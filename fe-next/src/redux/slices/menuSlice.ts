@@ -94,7 +94,7 @@ const menuSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchMenuHierarchy.fulfilled, (state, action) => {
-        const sortMenuHierarchy = (menu: any): any => {
+        const sortMenuHierarchy = (menu: MenuItem): MenuItem => {
           if (!menu.children || menu.children.length === 0) return menu;
           return {
             ...menu,

@@ -1,43 +1,45 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-interface MenuItem {
+export interface MenuItems {
   title: string;
   icon: string;
   highlight?: boolean;
-  children?: MenuItem[];
+  children?: MenuItems[];
 }
 
 interface SidebarState {
   isSidebarOpen: boolean;
   openMenus: Record<string, boolean>;
-  menuItems: MenuItem[];
+  menuItems: MenuItems[];
   loading: boolean;
   error: string | null;
 }
 
-// Fetch data dari API (sementara hardcoded)
-export const fetchMenuItems = createAsyncThunk("sidebar/fetchMenuItems", async () => {
-  const response = [
-    {
-      title: "Systems",
-      icon: "/icons/menu.png",
-      highlight: false,
-      children: [
-        { title: "System Code", icon: "/icons/submenu.png", highlight: false },
-        { title: "Properties", icon: "/icons/submenu.png", highlight: false },
-        { title: "Menus", icon: "/icons/submenu.png", highlight: false }, 
-        { title: "API List", icon: "/icons/submenu.png", highlight: false },
-      ],
-    },
-    {
-      title: "Users & Group",
-      icon: "/icons/menu.png",
-      highlight: false,
-      
-    },
-  ];
-  return response;
-});
+// Fetch data dari API (tanpa any)
+export const fetchMenuItems = createAsyncThunk<MenuItems[]>(
+  "sidebar/fetchMenuItems",
+  async () => {
+    const response: MenuItems[] = [
+      {
+        title: "Systems",
+        icon: "/icons/menu.png",
+        highlight: false,
+        children: [
+          { title: "System Code", icon: "/icons/submenu.png", highlight: false },
+          { title: "Properties", icon: "/icons/submenu.png", highlight: false },
+          { title: "Menus", icon: "/icons/submenu.png", highlight: false },
+          { title: "API List", icon: "/icons/submenu.png", highlight: false },
+        ],
+      },
+      {
+        title: "Users & Group",
+        icon: "/icons/menu.png",
+        highlight: false,
+      },
+    ];
+    return response;
+  }
+);
 
 const initialState: SidebarState = {
   isSidebarOpen: true,
@@ -76,12 +78,12 @@ const sidebarSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchMenuItems.fulfilled, (state, action: PayloadAction<MenuItem[]>) => {
+      .addCase(fetchMenuItems.fulfilled, (state, action: PayloadAction<MenuItems[]>) => {
         state.loading = false;
         state.menuItems = action.payload;
         sidebarSlice.caseReducers.setHighlightedMenu(state, {
-            payload: "Menus",
-            type: ""
+          payload: "Menus",
+          type: "",
         }); // Default aktif di "Menus"
       })
       .addCase(fetchMenuItems.rejected, (state, action) => {

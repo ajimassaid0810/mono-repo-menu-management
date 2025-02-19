@@ -4,20 +4,20 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu, fetchMenuItems, setHighlightedMenu } from "../../redux/slices/sideBarSlice";
-import { RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 
 interface SidebarProps {
   setActiveMenu: (menu: string) => void; // ✅ Pastikan setActiveMenu bertipe function dengan string sebagai parameter
 }
 
 export default function Sidebar({ setActiveMenu }:SidebarProps) {
-  const dispatch = useDispatch();
+   const dispatch = useDispatch<AppDispatch>();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const { menuItems, openMenus, loading } = useSelector((state: RootState) => state.sidebar);
 
   useEffect(() => {
-    dispatch(fetchMenuItems() as any);
+    dispatch(fetchMenuItems());
   }, [dispatch]);
 
   if (loading) {

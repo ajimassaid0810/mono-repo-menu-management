@@ -56,6 +56,7 @@ const MenuDetails = () => {
 
   // Fungsi untuk menyimpan data ke server
   const handleSave = () => { 
+    setLoading(true)
     const data = { name, parentId, depth }; 
     if (id) {
       // Update existing menu
@@ -66,9 +67,10 @@ const MenuDetails = () => {
           dispatch(fetchMenus());
           dispatch(fetchMenuHierarchy());
           dispose()
+
         })
         .catch((error) => {
-          alert(`Error updating menu: ${error}`);
+          setMessage(`Error updating menu: ${error}`);
         });
     } else {
       // Create new menu
@@ -81,10 +83,10 @@ const MenuDetails = () => {
           dispose()
         })
         .catch((error) => {
-          alert(`Error create menu: ${error}`);
+          setMessage(`Error create menu: ${error}`);
         });
       }
-  
+  setLoading(false)
     
   };
 
@@ -98,7 +100,7 @@ const MenuDetails = () => {
       <div className="flex flex-col md:flex-row gap-4">
         {/* Sidebar Tree View */}
         <div className="w-[349px] mt-4">
-          <TreeView onSelect={(id) => dispatch(getMenusById(id))}  onAddSubmenu={(id)=>{
+          <TreeView  onAddSubmenu={(id)=>{
             setId("");
             setName("");
             setParentId(id);

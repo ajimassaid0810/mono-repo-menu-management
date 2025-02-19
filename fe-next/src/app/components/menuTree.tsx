@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
-import { fetchMenuHierarchy, toggleNode, expandAll, collapseAll, getMenusById, deleteMenu, fetchMenus } from "../../redux/slices/menuSlice";
+import { fetchMenuHierarchy, toggleNode, expandAll, collapseAll, getMenusById, deleteMenu, fetchMenus, MenuItem } from "../../redux/slices/menuSlice";
 import { ChevronDown, ChevronRight, Plus, Trash } from "lucide-react";
 
 const TreeNode = ({ node, isFirst, selectedNodeId, onSelect, onAddSubmenu, onDelete }: { 
-  node: any; 
+  node: MenuItem; 
   isFirst: boolean; 
   selectedNodeId: string | null; 
   onSelect: (id: string) => void;
@@ -64,7 +64,7 @@ const TreeNode = ({ node, isFirst, selectedNodeId, onSelect, onAddSubmenu, onDel
 
       {isExpanded && node.children && (
         <div className="ml-4 w-full">
-          {node.children.map((child: any) => (
+          {node.children.map((child: MenuItem) => (
             <TreeNode key={child.id} node={child} isFirst={false} selectedNodeId={selectedNodeId} onSelect={onSelect} onAddSubmenu={onAddSubmenu} onDelete={onDelete} />
           ))}
         </div>
@@ -73,7 +73,7 @@ const TreeNode = ({ node, isFirst, selectedNodeId, onSelect, onAddSubmenu, onDel
   );
 };
 
-export default function TreeView({ onSelect, onAddSubmenu }: { onSelect: (id: string) => void, onAddSubmenu: (id: string, depth: number) => void }) {
+export default function TreeView({  onAddSubmenu }: {  onAddSubmenu: (id: string, depth: number) => void }) {
   const dispatch = useDispatch<AppDispatch>();
   const { menuHierarchy, loading, error } = useSelector((state: RootState) => state.menu);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
